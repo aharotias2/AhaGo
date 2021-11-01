@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=BakamonGo
+Comment=囲碁アプリ (GTK+3)
+Icon=com.github.aharotias2.BakamonGo
+Exec=com.github.aharotias2.BakamonGo
+Type=Application
+Terminal=false
+Categories=Game

@@ -25,3 +25,14 @@ executable(
   install_dir: get_option('prefix') / 'bin'
 )
 
+install_data(
+  'data/com.github.aharotias2.BakamonGo.png',
+  install_dir: get_option('datadir') / 'share/icons/hicolor/128x128/apps'
+)
+
+install_data(
+  'data/com.github.aharotias2.BakamonGo.desktop',
+  install_dir: get_option('datadir') / 'applications'
+)
+
+

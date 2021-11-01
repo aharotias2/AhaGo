@@ -588,11 +588,12 @@ namespace Bakamon {
             light_offset.y = center.y + b * d * 0.3;
 
             var light_pattern2 = new Cairo.Pattern.radial(
-                    light_offset.x, light_offset.y, 0, light_offset.x, light_offset.y, radius * 0.4);
-            light_pattern2.add_color_stop_rgba(radius * 0.5, 1.0, 1.0, 1.0, 0.0);
-            light_pattern2.add_color_stop_rgba(0.1, 1.0, 1.0, 1.0, 0.8);
+                    light_offset.x, light_offset.y, 0, light_offset.x, light_offset.y, radius * 0.6);
+            light_pattern2.add_color_stop_rgba(radius * 0.6, 1.0, 1.0, 1.0, 0.0);
+            light_pattern2.add_color_stop_rgba(0.0, 1.0, 1.0, 1.0, 0.5);
             cairo.set_source(light_pattern2);
-            cairo.arc(center.x, center.y, radius * 0.9, 0.0, Math.PI * 2.0);
+            //cairo.arc(center.x, center.y, radius * 0.5, 0.0, Math.PI * 2.0);
+            cairo.arc(light_offset.x, light_offset.y, radius * 0.6, 0.0, Math.PI * 2.0);
             cairo.fill();
         }
     }

@@ -12,6 +12,21 @@ resources = gnome.compile_resources(
 executable(
   'com.github.aharotias2.BakamonGo',
   [
+    'src/enum/bakamongotern.vala',
+    'src/enum/bakamongostatus.vala',
+    'src/enum/bakamonmodelsize.vala',
+    'src/misc/bakamonlabelbuilder.vala',
+    'src/model/bakamongomodel.vala',
+    'src/model/bakamonhistoryitem.vala',
+    'src/widgethelper/bakamonballdrawer.vala',
+    'src/widgethelper/bakamondpoint.vala',
+    'src/widget/bakamonminigowidget.vala',
+    'src/widget/bakamongopowswidget.vala',
+    'src/widget/bakamongowidget.vala',
+    'src/widget/bakamongoscoreboard.vala',
+    'src/widget/bakamontitlelogo.vala',
+    'src/widget/bakamonternswitcher.vala',
+    'src/widget/bakamonstopwatch.vala',
     'src/bakamongo.vala',
     resources
   ],
@@ -34,5 +49,4 @@ install_data(
   'data/com.github.aharotias2.BakamonGo.desktop',
   install_dir: get_option('datadir') / 'applications'
 )
-
 

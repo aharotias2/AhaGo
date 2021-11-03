@@ -12,6 +12,7 @@ resources = gnome.compile_resources(
 executable(
   'com.github.aharotias2.BakamonGo',
   [
+    'src/bakamonconsts.vala',
     'src/enum/bakamongotern.vala',
     'src/enum/bakamongostatus.vala',
     'src/enum/bakamonmodelsize.vala',
@@ -31,6 +32,7 @@ executable(
     resources
   ],
   dependencies: [
+    dependency('glib-2.0'),
     dependency('gdk-3.0'),
     dependency('gtk+-3.0'),
     dependency('json-glib-1.0'),

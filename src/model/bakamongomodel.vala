@@ -1,3 +1,22 @@
+/*
+ * This file is part of Bakamon-Go.
+ *
+ *     Bakamon-Go is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     Bakamon-Go is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with Bakamon-Go.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * Copyright 2021 Takayuki Tanaka
+ */
+
 namespace Bakamon {
     public class GoModel : Object {
         public bool is_debug_enabled { get; set; default = false; }
@@ -76,8 +95,8 @@ namespace Bakamon {
         public Json.Node get_history() {
             Json.Object json = new Json.Object();
             json.set_string_member("盤面", size.to_string());
-            json.set_string_member("開始時刻", start_datetime.format_iso8601());
-            json.set_string_member("終了時刻", new DateTime.now_local().format_iso8601());
+            json.set_string_member("開始時刻", start_datetime.format(DATETIME_FORMAT_ISO8601));
+            json.set_string_member("終了時刻", new DateTime.now_local().format(DATETIME_FORMAT_ISO8601));
             json.set_int_member("黒星", black_score - white_pows);
             json.set_int_member("白星", white_score - black_pows);
             if ((black_score - white_pows) > (white_score - black_pows)) {
@@ -91,8 +110,12 @@ namespace Bakamon {
             foreach (var item in history) {
                 Json.Array item_array = new Json.Array();
                 item_array.add_string_element(item.is_black ? "黒" : "白");
-                item_array.add_int_element(item.x);
-                item_array.add_int_element(item.y);
+                if (item.is_passed) {
+                    item_array.add_string_element("パス");
+                } else {
+                    item_array.add_int_element(item.x);
+                    item_array.add_int_element(item.y);
+                }
                 arr.add_array_element(item_array);
             }
             json.set_array_member("棋譜", arr);

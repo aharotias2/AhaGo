@@ -19,16 +19,16 @@
 
 namespace Bakamon {
     public class TernSwitcher : Gtk.DrawingArea {
-        public int width = 130;
-        public int height = 50;
-        public int radius = 16;
+        public int width = 80;
+        public int height = 40;
+        public int radius = 18;
         public Gdk.RGBA selection_bg_color = { 0.9, 0.6, 0.4, 1.0 };
         public Gdk.RGBA normal_bg_color = { 3.0, 3.0, 3.0, 1.0 };
         public int spacing = 2;
         public DPoint cursor;
         private DPoint black_ball_position;
         private DPoint white_ball_position;
-        private double ball_radius = 16.0;
+        private double ball_radius = 10.0;
         private double highlight_radius = 150;
         private int selection_offset = 0;
         private GoTern tern_value = BLACK;

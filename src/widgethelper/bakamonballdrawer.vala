@@ -30,9 +30,9 @@ namespace Bakamon {
         public void set_color(GoStatus status) {
             this.status = status;
             if (status == BLACK) {
-                base_color = { 0.11, 0.11, 0.11, 1.0 };
+                base_color = { 0.1, 0.1, 0.1, 1.0 };
             } else {
-                base_color = { 0.77, 0.77, 0.77, 1.0 };;
+                base_color = { 0.7, 0.7, 0.7, 1.0 };;
             }
         }
               
@@ -61,8 +61,8 @@ namespace Bakamon {
 
             var shadow_pattern = new Cairo.Pattern.radial(
                     shadow_offset.x, shadow_offset.y, 0, shadow_offset.x, shadow_offset.y, radius * 1.3);
-            shadow_pattern.add_color_stop_rgba(radius * 1.0, 0.0, 0.0, 0.0, 0.0);
-            shadow_pattern.add_color_stop_rgba(0, 0.0, 0.0, 0.0, 0.9);
+            shadow_pattern.add_color_stop_rgba(radius * 1.2, 0.0, 0.0, 0.0, 0.0);
+            shadow_pattern.add_color_stop_rgba(0.0, 0.0, 0.0, 0.0, 0.9);
             cairo.set_source(shadow_pattern);
             cairo.arc(shadow_offset.x + 5, shadow_offset.y + 5, radius * 2.0, 0.0, Math.PI * 2.0);
             cairo.fill();
@@ -89,12 +89,12 @@ namespace Bakamon {
             light_offset.y = center.y + b * d * 0.3;
 
             var light_pattern2 = new Cairo.Pattern.radial(
-                    light_offset.x, light_offset.y, 0, light_offset.x, light_offset.y, radius * 0.6);
+                    light_offset.x, light_offset.y, 0, light_offset.x, light_offset.y, radius * 0.65);
             light_pattern2.add_color_stop_rgba(radius * 0.6, 1.0, 1.0, 1.0, 0.0);
-            light_pattern2.add_color_stop_rgba(0.0, 1.0, 1.0, 1.0, 0.66);
+            light_pattern2.add_color_stop_rgba(0.0, 1.0, 1.0, 1.0, 0.7);
             cairo.set_source(light_pattern2);
             //cairo.arc(center.x, center.y, radius * 0.5, 0.0, Math.PI * 2.0);
-            cairo.arc(light_offset.x, light_offset.y, radius * 0.6, 0.0, Math.PI * 2.0);
+            cairo.arc(light_offset.x, light_offset.y, radius * 0.7, 0.0, Math.PI * 2.0);
             cairo.fill();
         }
     }

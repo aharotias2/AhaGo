@@ -141,7 +141,7 @@ namespace Bakamon {
         }
                 
         public async bool put_black(int y, int x) {
-            if (yield can_put_v2(BLACK, y, x)) {
+            if (yield can_put(BLACK, y, x)) {
                 status[y, x] = BLACK;
                 history.append({true, false, x, y});
                 territory_status[y, x] = BLACK;
@@ -157,7 +157,7 @@ namespace Bakamon {
         }
 
         public async bool put_white(int y, int x) {
-            if (yield can_put_v2(WHITE, y, x)) {
+            if (yield can_put(WHITE, y, x)) {
                 status[y, x] = WHITE;
                 history.append({false, false, x, y});
                 territory_status[y, x] = WHITE;
@@ -172,7 +172,7 @@ namespace Bakamon {
             }
         }
 
-        private async bool can_put_v2(GoStatus go, int y, int x) {
+        private async bool can_put(GoStatus go, int y, int x) {
             if (status[y, x] != EMPTY) {
                 return false;
             } else {
@@ -261,7 +261,7 @@ namespace Bakamon {
         private async void check_territory() {
             for (int j = 0; j < size.y_length(); j++) {
                 for (int i = 0; i < size.x_length(); i++) {
-                    if (territory_status[j, i] == EMPTY) {
+                    if (status[j, i] == EMPTY) {
                         bool[,] checker = new bool[size.y_length(), size.x_length()];
                         var go = yield is_surrounded_by(EMPTY, j, i, checker);
                         if (go == BLACK || go == WHITE) {
@@ -276,7 +276,8 @@ namespace Bakamon {
                                 }
                             }
                         } else if (go == EMPTY) {
-                            while (territory_status[j, i] == EMPTY) {
+                            while (status[j, i] == EMPTY) {
+                                territory_status[j, i] = EMPTY;
                                 i++;
                             }
                         }

@@ -19,7 +19,7 @@
 
 namespace Bakamon {
     public class GoPowsWidget : Gtk.DrawingArea {
-        private int width = 264;
+        private int width = 200;
         
         public int pows_count {
             get {
@@ -40,6 +40,7 @@ namespace Bakamon {
             this.status = status;
             drawer = new BallDrawer();
             drawer.set_color(status);
+            width_request = width;
         }
         
         public override bool draw(Cairo.Context cairo) {

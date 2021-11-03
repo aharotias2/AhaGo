@@ -177,7 +177,7 @@ namespace Bakamon {
             cairo.rectangle(area_rect.x, area_rect.y, area_rect.width - area_rect.x, area_rect.height - area_rect.y);
             cairo.fill();
 
-            cairo.set_source_rgb(line_color.red, line_color.green, line_color.blue);
+            cairo.set_source_rgba(line_color.red, line_color.green, line_color.blue, line_color.alpha);
             cairo.set_line_width(line_width);
             
             for (int j = 0; j < model.size.y_length(); j++) {

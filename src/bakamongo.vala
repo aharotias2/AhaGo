@@ -21,7 +21,8 @@ namespace Bakamon {
     public class Go : Gtk.Application {
         public bool is_debug_enabled { get; set; default = false; }
         private Bakamon.GoWidget? go_widget = null;
-        private Bakamon.StopWatch? stop_watch = null;
+        private unowned Bakamon.StopWatch? stop_watch_black = null;
+        private unowned Bakamon.StopWatch? stop_watch_white = null;
         private Bakamon.TernSwitcher? tern_switcher = null;
         private Bakamon.GoScoreBoard? score_board = null;
         private Gtk.Stack? stack = null;
@@ -116,7 +117,9 @@ namespace Bakamon {
                                     stack.visible_child_name = "page-3";
                                     window.resize(1, 1);
                                     Idle.add(() => {
-                                        stop_watch.run.begin();
+                                        stop_watch_black.run.begin();
+                                        stop_watch_white.run.begin();
+                                        stop_watch_white.pause();
                                         return false;
                                     });
                                 });
@@ -153,6 +156,13 @@ namespace Bakamon {
                                 };
                                 {
                                     go_widget.tern_changed.connect((tern) => {
+                                        if (go_widget.model.tern == BLACK) {
+                                            stop_watch_white.pause();
+                                            stop_watch_black.unpause();
+                                        } else {
+                                            stop_watch_white.unpause();
+                                            stop_watch_black.pause();
+                                        }
                                         score_board.black_score = go_widget.model.black_score;
                                         score_board.white_score = go_widget.model.white_score;
                                         score_board.black_pows = go_widget.model.black_pows;
@@ -176,13 +186,15 @@ namespace Bakamon {
                                         } else {
                                             message = @"白の勝ち (白$(white_score)点、黒$(black_score)点)";
                                         }
-                                        stop_watch.stop();
+                                        stop_watch_black.stop();
+                                        stop_watch_white.stop();
                                         go_widget.sensitive = false;
                                         go_widget.require_showing_message(message);
                                     });
 
                                     go_widget.end_with_a_draw.connect(() => {
-                                        stop_watch.stop();
+                                        stop_watch_black.stop();
+                                        stop_watch_white.stop();
                                         go_widget.sensitive = false;
                                         go_widget.require_showing_message(@"引き分け (両者$(go_widget.model.black_score)点)");
                                     });
@@ -202,15 +214,32 @@ namespace Bakamon {
                                     tern_switcher.tern = BLACK;
                                 }
 
-                                stop_watch = new Bakamon.StopWatch();
-                                {
-                                    stop_watch.halign = END;
-                                    stop_watch.started.connect(() => {
-                                        go_widget.sensitive = true;
-                                    });
-                                }
-
                                 score_board = new Bakamon.GoScoreBoard();
+                                {
+                                    stop_watch_black = score_board.stop_watch_black;
+                                    {
+                                        stop_watch_black.start_from = 1000 * 60 * 40;
+                                        stop_watch_black.halign = END;
+                                        stop_watch_black.started.connect(() => {
+                                            go_widget.sensitive = true;
+                                        });
+                                        stop_watch_black.end_count_down.connect(() => {
+                                            go_widget.model.finish_game();
+                                        });
+                                    }
+
+                                    stop_watch_white = score_board.stop_watch_white;
+                                    {
+                                        stop_watch_white.start_from = 1000 * 60 * 40;
+                                        stop_watch_white.halign = END;
+                                        stop_watch_white.started.connect(() => {
+                                            go_widget.sensitive = true;
+                                        });
+                                        stop_watch_white.end_count_down.connect(() => {
+                                            go_widget.model.finish_game();
+                                        });
+                                    }
+                                }
 
                                 var toggle_showing_territories = new Gtk.ToggleButton.with_label("陣地を表示する");
                                 toggle_showing_territories.toggled.connect(() => {
@@ -233,7 +262,8 @@ namespace Bakamon {
                                     stack.transition_type = SLIDE_RIGHT;
                                     go_widget.sensitive = false;
                                     score_board.reset();
-                                    stop_watch.stop();
+                                    stop_watch_black.stop_signal();
+                                    stop_watch_white.stop();
                                     Idle.add(() => {
                                         stack.visible_child_name = "page-1";
                                         stack.transition_type = SLIDE_LEFT;
@@ -270,7 +300,6 @@ namespace Bakamon {
                                 });
 
                                 right_box.pack_start(tern_switcher, false, false);
-                                right_box.pack_start(stop_watch, false, false);
                                 right_box.pack_start(score_board, false, false);
                                 right_box.pack_start(toggle_showing_territories, false, false);
                                 right_box.pack_start(pass_button, false, false);

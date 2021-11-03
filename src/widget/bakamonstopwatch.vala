@@ -20,7 +20,11 @@
 namespace Bakamon {
     public class StopWatch : Gtk.Box {
         public signal void started();
+        public signal void end_count_down();
         
+        public int start_from = 0;
+        public bool is_counting_down = false;
+                
         private Gtk.Label label_1;
         private Gtk.Label label_2;
         private bool is_running = false;
@@ -33,10 +37,10 @@ namespace Bakamon {
                 orientation: Gtk.Orientation.HORIZONTAL
             );
         }
-                
+
         construct {
             label_1 = Bakamon.LabelBuilder.create()
-                    .size(16).weight(BOLD).style(ITALIC).family("Sans")
+                    .size(14).weight(BOLD).style(ITALIC).family("Sans")
                     .label("0:00").build();
             label_1.valign = END;
             label_2 = Bakamon.LabelBuilder.create()
@@ -50,34 +54,19 @@ namespace Bakamon {
         }
         
         public async void run() {
+            time = start_from;
+            update_time();
             count++;
             int count_save = count;
             is_running = true;
             is_paused = false;
-            time = 0;
+            Idle.add(run.callback);
+            yield;
             started();
-            int hour_span = 60 * 60 * 10;
-            while (count_save == count && is_running) {
+            while (count_save == count && is_running && time > 0) {
                 if (!is_paused) {
-                    time += 1;
-                    if (time < hour_span) {
-                        label_1.label = "%02d:%02d".printf(
-                            time / 100 / 60,
-                            time / 100 % 60
-                        );
-                        label_2.label = ".%02d".printf(
-                            time % 100
-                        );
-                    } else {
-                        label_1.label = "%d:%02d:%02d".printf(
-                            time / 100 / 60 / 60,
-                            time / 100 / 60 % 60,
-                            time / 100 % 60
-                        );
-                        label_2.label = ".%02d".printf(
-                            time % 100
-                        );
-                    }
+                    time -= 10;
+                    update_time();
                 }
                 Timeout.add(10, run.callback);
                 yield;
@@ -88,12 +77,34 @@ namespace Bakamon {
             is_running = false;
         }
         
+        public void stop_signal() {
+            is_running = false;
+            Idle.add(() => {
+                end_count_down();
+                return false;
+            });
+        }
+        
         public void pause() {
             is_paused = true;
         }
         
         public void unpause() {
             is_paused = false;
+        }
+        
+        private void update_time() {
+            int hour = time / 1000 / 60 / 60;
+            int minute = time / 1000 / 60 % 60;
+            int second = time / 1000 % 60;
+            int millisecond = time % 1000;
+            if (hour == 0) {
+                label_1.label = "%02d:%02d".printf(minute, second);
+                label_2.label = ".%02d".printf(millisecond / 10);
+            } else {
+                label_1.label = "%d:%02d:%02d".printf(hour, minute, second);
+                label_2.label = ".%02d".printf(millisecond / 10);
+            }
         }
     }
 }

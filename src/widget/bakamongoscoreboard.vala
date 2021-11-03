@@ -55,6 +55,8 @@ namespace Bakamon {
                 white_pows_widget.pows_count = white_pows_value;
             }
         }
+        public StopWatch stop_watch_black { get; private set; }
+        public StopWatch stop_watch_white { get; private set; }
         private int black_score_value;
         private int white_score_value;
         private int black_pows_value;
@@ -74,8 +76,21 @@ namespace Bakamon {
         construct {
             var attrlist_big = LabelBuilder.create().weight(BOLD).family("Serif").size(16).attrlist();
             var attrlist_small = LabelBuilder.create().weight(BOLD).family("Serif").size(12).attrlist();
-            black_score_label = new Gtk.Label("黒：<span color=\"red\">0</span>点") {
-                    attributes = attrlist_big, halign = START, use_markup = true };
+            
+            var black_score_box = new Gtk.Box(HORIZONTAL, 0);
+            {
+                black_score_label = new Gtk.Label("黒：<span color=\"red\">0</span>点") {
+                        attributes = attrlist_big, halign = START, use_markup = true };
+                black_score_label.halign = START;
+                
+                stop_watch_black = new StopWatch() {
+                    halign = END
+                };
+
+                black_score_box.pack_start(black_score_label, true, false);
+                black_score_box.pack_end(stop_watch_black, true, false);
+            }
+            
             var black_pows_frame = new Gtk.Frame(null);
             {
                 var black_pows_label = new Gtk.Label("黒の捕虜") { attributes = attrlist_small };
@@ -83,8 +98,20 @@ namespace Bakamon {
                 black_pows_frame.add(black_pows_widget);
                 black_pows_frame.label_widget = black_pows_label;
             }
-            white_score_label = new Gtk.Label("白：<span color=\"blue\">0</span>点") {
-                    attributes = attrlist_big, halign = START, use_markup = true };
+            
+            var white_score_box = new Gtk.Box(HORIZONTAL, 0);
+            {
+                white_score_label = new Gtk.Label("白：<span color=\"blue\">0</span>点") {
+                        attributes = attrlist_big, halign = START, use_markup = true };
+                
+                stop_watch_white = new StopWatch() {
+                    halign = END
+                };
+                
+                white_score_box.pack_start(white_score_label, true, false);
+                white_score_box.pack_end(stop_watch_white, true, false);
+            }
+            
             var white_pows_frame = new Gtk.Frame(null);
             {
                 var white_pows_label = new Gtk.Label("白の捕虜") { attributes = attrlist_small };
@@ -92,9 +119,9 @@ namespace Bakamon {
                 white_pows_frame.add(white_pows_widget);
                 white_pows_frame.label_widget = white_pows_label;
             }
-            pack_start(black_score_label, false, false);
+            pack_start(black_score_box, false, false);
             pack_start(black_pows_frame, false, false);
-            pack_start(white_score_label, false, false);
+            pack_start(white_score_box, false, false);
             pack_start(white_pows_frame, false, false);
         }
         

@@ -55,6 +55,7 @@ namespace Bakamon {
         }
         public int black_pows { get; private set; default = 0; }
         public int white_pows { get; private set; default = 0; }
+        public bool is_continued { get; private set; default = false; }
         private GoStatus[,] status;
         private GoStatus[,] territory_status;
         private int put_count = 0;
@@ -133,6 +134,7 @@ namespace Bakamon {
         }
 
         public async bool put(int y, int x) {
+            is_continued = true;
             if (tern == BLACK) {
                 return yield put_black(y, x);
             } else {
@@ -294,15 +296,18 @@ namespace Bakamon {
             finish_game();
         }
 
-        private void finish_game() {
-            int black_score_value = black_score - white_pows;
-            int white_score_value = white_score - black_pows;
-            if (black_score_value > white_score_value) {
-                game_over(BLACK);
-            } else if (white_score_value > black_score_value) {
-                game_over(WHITE);
-            } else {
-                end_with_a_draw();
+        public void finish_game() {
+            if (is_continued) {
+                is_continued = false;
+                int black_score_value = black_score - white_pows;
+                int white_score_value = white_score - black_pows;
+                if (black_score_value > white_score_value) {
+                    game_over(BLACK);
+                } else if (white_score_value > black_score_value) {
+                    game_over(WHITE);
+                } else {
+                    end_with_a_draw();
+                }
             }
         }
         

@@ -27,7 +27,7 @@ AppImage
 ----------------------------------------------------------------------------------------------------
 AppImage版を一応作ったのでダウンロードしていただければすぐにプレイを開始できます。
 
-<https://drive.google.com/file/d/1ICcPsvpIJtXDfSFxH6bkD7_78wKgrRlY/view?usp=sharing>
+<https://drive.google.com/file/d/117iMZoFdW3fuZsK4ddyglU49A_lfksNQ/view?usp=sharing>
 
 ----------------------------------------------------------------------------------------------------
 

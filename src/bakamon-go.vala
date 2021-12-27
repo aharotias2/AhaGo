@@ -31,7 +31,7 @@ namespace Bakamon {
         private Gtk.Box? page_3 = null;
 
         public Go() {
-            Object(application_id: "com.github.aharotias2.BakamonGo", flags: ApplicationFlags.FLAGS_NONE);
+            Object(application_id: APP_ID, flags: ApplicationFlags.FLAGS_NONE);
         }
         
         public override void activate() {

@@ -1,4 +1,4 @@
-project('com.github.aharotias2.BakamonGo', 'vala', 'c', version: '0.0.1')
+project('com.github.aharotias2.AhaGo', 'vala', 'c', version: '0.0.1')
 
 libm_dep = meson.get_compiler('c').find_library('libm')
 
@@ -35,23 +35,23 @@ project_config_dep = declare_dependency(
 executable(
   meson.project_name(),
   [
-    'src/bakamon-consts.vala',
-    'src/enum/bakamon-go-tern.vala',
-    'src/enum/bakamon-go-status.vala',
-    'src/enum/bakamon-model-size.vala',
-    'src/misc/bakamon-label-builder.vala',
-    'src/model/bakamon-go-model.vala',
-    'src/model/bakamon-history-item.vala',
-    'src/widgethelper/bakamon-ball-drawer.vala',
-    'src/widgethelper/bakamon-dpoint.vala',
-    'src/widget/bakamon-mini-go-widget.vala',
-    'src/widget/bakamon-go-pows-widget.vala',
-    'src/widget/bakamon-go-widget.vala',
-    'src/widget/bakamon-go-score-board.vala',
-    'src/widget/bakamon-title-logo.vala',
-    'src/widget/bakamon-tern-switcher.vala',
-    'src/widget/bakamon-stopwatch.vala',
-    'src/bakamon-go.vala',
+    'src/aha-consts.vala',
+    'src/enum/aha-go-tern.vala',
+    'src/enum/aha-go-status.vala',
+    'src/enum/aha-model-size.vala',
+    'src/misc/aha-label-builder.vala',
+    'src/model/aha-go-model.vala',
+    'src/model/aha-history-item.vala',
+    'src/widgethelper/aha-ball-drawer.vala',
+    'src/widgethelper/aha-dpoint.vala',
+    'src/widget/aha-mini-go-widget.vala',
+    'src/widget/aha-go-pows-widget.vala',
+    'src/widget/aha-go-widget.vala',
+    'src/widget/aha-go-score-board.vala',
+    'src/widget/aha-title-logo.vala',
+    'src/widget/aha-tern-switcher.vala',
+    'src/widget/aha-stopwatch.vala',
+    'src/aha-go.vala',
     resources
   ],
   dependencies: [
@@ -66,7 +66,7 @@ executable(
   install_dir: get_option('prefix') / 'bin'
 )
 
-foreach size : ['16', '24', '32', '48', '128', '512']
+foreach size : ['16', '24', '32', '48', '128']
   install_data(
     'data/icons/@0@/@1@.png'.format(size, meson.project_name()),
     install_dir: get_option('datadir') / 'icons/hicolor/@0@x@0@/apps'.format(size)

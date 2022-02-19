@@ -1,23 +1,23 @@
 /*
- * This file is part of Bakamon-Go.
+ * This file is part of Aha-Go.
  *
- *     Bakamon-Go is free software: you can redistribute it and/or modify
+ *     Aha-Go is free software: you can redistribute it and/or modify
  *     it under the terms of the GNU General Public License as published by
  *     the Free Software Foundation, either version 3 of the License, or
  *     (at your option) any later version.
  *
- *     Bakamon-Go is distributed in the hope that it will be useful,
+ *     Aha-Go is distributed in the hope that it will be useful,
  *     but WITHOUT ANY WARRANTY; without even the implied warranty of
  *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *     GNU General Public License for more details.
  *
  *     You should have received a copy of the GNU General Public License
- *     along with Bakamon-Go.  If not, see <http://www.gnu.org/licenses/>.
+ *     along with Aha-Go.  If not, see <http://www.gnu.org/licenses/>.
  *
  * Copyright 2021 Takayuki Tanaka
  */
 
-namespace Bakamon {
+namespace Aha {
     public class StopWatch : Gtk.Box {
         public signal void started();
         public signal void end_count_down();
@@ -39,11 +39,11 @@ namespace Bakamon {
         }
 
         construct {
-            label_1 = Bakamon.LabelBuilder.create()
+            label_1 = Aha.LabelBuilder.create()
                     .size(14).weight(BOLD).style(ITALIC).family("Sans")
                     .label("0:00").build();
             label_1.valign = END;
-            label_2 = Bakamon.LabelBuilder.create()
+            label_2 = Aha.LabelBuilder.create()
                     .size(10).weight(BOLD).style(ITALIC).family("Sans")
                     .label(".00").build();
             label_2.valign = END;

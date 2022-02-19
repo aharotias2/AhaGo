@@ -1,30 +1,30 @@
 /*
- * This file is part of Bakamon-Go.
+ * This file is part of Aha-Go.
  *
- *     Bakamon-Go is free software: you can redistribute it and/or modify
+ *     Aha-Go is free software: you can redistribute it and/or modify
  *     it under the terms of the GNU General Public License as published by
  *     the Free Software Foundation, either version 3 of the License, or
  *     (at your option) any later version.
  *
- *     Bakamon-Go is distributed in the hope that it will be useful,
+ *     Aha-Go is distributed in the hope that it will be useful,
  *     but WITHOUT ANY WARRANTY; without even the implied warranty of
  *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *     GNU General Public License for more details.
  *
  *     You should have received a copy of the GNU General Public License
- *     along with Bakamon-Go.  If not, see <http://www.gnu.org/licenses/>.
+ *     along with Aha-Go.  If not, see <http://www.gnu.org/licenses/>.
  *
  * Copyright 2021 Takayuki Tanaka
  */
 
-namespace Bakamon {
+namespace Aha {
     public class Go : Gtk.Application {
         public bool is_debug_enabled { get; set; default = false; }
-        private Bakamon.GoWidget? go_widget = null;
-        private unowned Bakamon.StopWatch? stop_watch_black = null;
-        private unowned Bakamon.StopWatch? stop_watch_white = null;
-        private Bakamon.TernSwitcher? tern_switcher = null;
-        private Bakamon.GoScoreBoard? score_board = null;
+        private Aha.GoWidget? go_widget = null;
+        private unowned Aha.StopWatch? stop_watch_black = null;
+        private unowned Aha.StopWatch? stop_watch_white = null;
+        private Aha.TernSwitcher? tern_switcher = null;
+        private Aha.GoScoreBoard? score_board = null;
         private Gtk.Stack? stack = null;
         private Gtk.Box? page_1 = null;
         private Gtk.Box? page_2 = null;
@@ -47,7 +47,7 @@ namespace Bakamon {
                             {
                                 var big_logo = new Gtk.Image.from_resource("/images/go-logo.png");
 
-                                var title_logo = new Bakamon.TitleLogo() { valign = CENTER };
+                                var title_logo = new Aha.TitleLogo() { valign = CENTER };
 
                                 logo_overlay.add(big_logo);
                                 logo_overlay.add_overlay(title_logo);
@@ -78,10 +78,10 @@ namespace Bakamon {
                         {
                             var message_label = new Gtk.Label("盤面の大きさを選んでください");
                             var mini_board_grid = new Gtk.Grid();
-                            var mini_board_9 = new Bakamon.MiniGoWidget(MODEL_9) { margin = 5 };
-                            var mini_board_13 = new Bakamon.MiniGoWidget(MODEL_13) { margin = 5 };
-                            var mini_board_15 = new Bakamon.MiniGoWidget(MODEL_15) { margin = 5 };
-                            var mini_board_19 = new Bakamon.MiniGoWidget(MODEL_19) { margin = 5 };
+                            var mini_board_9 = new Aha.MiniGoWidget(MODEL_9) { margin = 5 };
+                            var mini_board_13 = new Aha.MiniGoWidget(MODEL_13) { margin = 5 };
+                            var mini_board_15 = new Aha.MiniGoWidget(MODEL_15) { margin = 5 };
+                            var mini_board_19 = new Aha.MiniGoWidget(MODEL_19) { margin = 5 };
                             var radio_model_9 = new Gtk.RadioButton.with_label(null, "9路盤 (9x9)") { active = true, halign = CENTER };
                             var radio_model_13 = new Gtk.RadioButton.with_label_from_widget(radio_model_9, "13路盤 (13x13)") { halign = CENTER };
                             var radio_model_15 = new Gtk.RadioButton.with_label_from_widget(radio_model_9, "15路盤 (15x15)") { halign = CENTER };
@@ -101,19 +101,19 @@ namespace Bakamon {
                             {
                                 var ok_button = new Gtk.Button.with_label("決定");
                                 ok_button.clicked.connect(() => {
-                                    Bakamon.ModelSize size;
+                                    Aha.ModelSize size;
                                     if (radio_model_9.active) {
-                                        size = Bakamon.ModelSize.MODEL_9;
+                                        size = Aha.ModelSize.MODEL_9;
                                     } else if (radio_model_13.active) {
-                                        size = Bakamon.ModelSize.MODEL_13;
+                                        size = Aha.ModelSize.MODEL_13;
                                     } else if (radio_model_15.active) {
-                                        size = Bakamon.ModelSize.MODEL_15;
+                                        size = Aha.ModelSize.MODEL_15;
                                     } else if (radio_model_19.active) {
-                                        size = Bakamon.ModelSize.MODEL_19;
+                                        size = Aha.ModelSize.MODEL_19;
                                     } else {
                                         return;
                                     }
-                                    go_widget.bind_model(new Bakamon.GoModel(size));
+                                    go_widget.bind_model(new Aha.GoModel(size));
                                     stack.visible_child_name = "page-3";
                                     window.resize(1, 1);
                                     Idle.add(() => {
@@ -151,7 +151,7 @@ namespace Bakamon {
                         {
                             var left_box = new Gtk.Box(VERTICAL, 2);
                             {
-                                go_widget = new Bakamon.GoWidget.with_model_size(MODEL_9) {
+                                go_widget = new Aha.GoWidget.with_model_size(MODEL_9) {
                                     is_debug_enabled = is_debug_enabled
                                 };
                                 {
@@ -208,13 +208,13 @@ namespace Bakamon {
 
                             var right_box = new Gtk.Box(VERTICAL, 2);
                             {
-                                tern_switcher = new Bakamon.TernSwitcher();
+                                tern_switcher = new Aha.TernSwitcher();
                                 {
                                     tern_switcher.halign = CENTER;
                                     tern_switcher.tern = BLACK;
                                 }
 
-                                score_board = new Bakamon.GoScoreBoard();
+                                score_board = new Aha.GoScoreBoard();
                                 {
                                     stop_watch_black = score_board.stop_watch_black;
                                     {
